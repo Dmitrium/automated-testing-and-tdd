@@ -2,25 +2,42 @@ package com.acme.banking.dbo.service;
 
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Cash;
+import com.acme.banking.dbo.repo.AccountRepository;
+import com.acme.banking.dbo.repo.ClientRepository;
 
 import java.util.Collection;
 import java.util.UUID;
 
 //TODO impl
 public class Processing {
+
+    private Cash cash;
+    private ClientRepository clientRepository;
+    private AccountRepository accountRepository;
+
+    public Processing(Cash cash, ClientRepository clientRepository, AccountRepository accountRepository) {
+        this.cash = cash;
+        this.clientRepository = clientRepository;
+        this.accountRepository = accountRepository;
+    }
+
+
     public UUID createClient(String name) {
-        return null;
+        return clientRepository.createClient(name);
     }
 
     public Collection<Account> getAccountsByClientId(UUID clientId) {
-        return null;
+        return accountRepository.getAccountsByClientId(clientId);
     }
 
     public void transfer(double amount, UUID fromAccountId, UUID toAccountId) {
-
+        Account fromAccount = accountRepository.findAccountById(fromAccountId);
+        Account toAccount = accountRepository.findAccountById(toAccountId);
+        fromAccount.withdraw(amount);
+        toAccount.deposit(amount);
     }
 
     public void cash(double amount, UUID fromAccountId) {
-        Cash.log(amount, fromAccountId);
+        cash.log(amount, fromAccountId);
     }
 }
