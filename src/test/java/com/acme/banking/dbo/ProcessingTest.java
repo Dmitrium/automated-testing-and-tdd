@@ -22,13 +22,18 @@ public class ProcessingTest {
     private AccountRepository accountRepository;
     private UUID clientID;
     private Processing sut;
+
     @Before
     public void setup() {
         cash = mock(Cash.class);
         clientRepository = mock(ClientRepository.class);
         accountRepository = mock(AccountRepository.class);
         clientID = UUID.randomUUID();
-        sut = new Processing(cash, clientRepository, accountRepository);
+        sut = Processing.builder()
+                .cash(cash)
+                .accountRepository(accountRepository)
+                .clientRepository(clientRepository)
+                .build();
     }
 
     @Test
@@ -44,7 +49,7 @@ public class ProcessingTest {
     }
 
     @Test
-    public void shouldWithdrawFirstAccountAndDepositSecondAccount(){
+    public void shouldWithdrawFirstAccountAndDepositSecondAccount() {
         UUID fromAccountId = UUID.randomUUID();
         UUID toAccountId = UUID.randomUUID();
         Account fromAccount = mock(Account.class);

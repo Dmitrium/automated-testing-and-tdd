@@ -15,6 +15,9 @@ public class Processing {
     private ClientRepository clientRepository;
     private AccountRepository accountRepository;
 
+    public Processing() {
+    }
+
     public Processing(Cash cash, ClientRepository clientRepository, AccountRepository accountRepository) {
         this.cash = cash;
         this.clientRepository = clientRepository;
@@ -39,5 +42,37 @@ public class Processing {
 
     public void cash(double amount, UUID fromAccountId) {
         cash.log(amount, fromAccountId);
+    }
+
+    public static ProcessingBuilder builder() {
+        return new ProcessingBuilder();
+    }
+
+    public static class ProcessingBuilder {
+        Processing processing;
+
+        ProcessingBuilder() {
+            processing = new Processing();
+        }
+
+        public ProcessingBuilder cash(Cash cash) {
+            processing.cash = cash;
+            return this;
+        }
+
+        public ProcessingBuilder clientRepository(ClientRepository clientRepository) {
+            processing.clientRepository = clientRepository;
+            return this;
+        }
+
+        public ProcessingBuilder accountRepository(AccountRepository accountRepository) {
+            processing.accountRepository = accountRepository;
+            return this;
+        }
+
+        public Processing build() {
+            return processing;
+        }
+
     }
 }
