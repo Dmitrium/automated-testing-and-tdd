@@ -52,4 +52,13 @@ public class SavingAccount implements Account {
     public void deposit(double amount) {
 
     }
+
+    @Override
+    public String toString() {
+        return "SavingAccount{" +
+                "id=" + id +
+                ", client=" + client +
+                ", amount=" + amount +
+                '}';
+    }
 }

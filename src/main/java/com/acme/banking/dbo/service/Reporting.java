@@ -7,7 +7,10 @@ public class Reporting {
      * @return Markdown report for all branches, clients, accounts
      */
     public String getReport(Branch rootBranch) {
-        //TODO impl
-        return null;
+        if (rootBranch.getChildren().isEmpty()) {
+            return "accounts: " + rootBranch.getAccounts();
+        } else {
+            return "branches: " + rootBranch.getChildren();
+        }
     }
 }
